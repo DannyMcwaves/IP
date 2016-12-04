@@ -1,3 +1,4 @@
+
 """
 this sub package is actually a dependency required by the main
 module directly in the IP package.
@@ -34,47 +35,77 @@ useful methods of the socket will include:
     12. get the current ip address of this machine.
 
 """
+
 import socket
 import sys
 import os
 import ipaddress
 
+__all__ = ["Resolve"]
+
 
 class Resolve:
+
     """
     I am going to use socket to get all the IP addresses
     that are specific and pertain to a particular hostname.
     And basically to perform net-mask and all that.
     """
 
-    def __init__(self, address):
-        if not address.isdigit():
-            self.__host = address
-            self.__ip = socket.gethostbyname(address)
-        else:
-            self.__host = None
-            self.__ip = address
+    def __init__(self, addr: str):
+        try:
+            self.__host = addr if addr.isalpha() else socket.gethostbyaddr(addr)[0]
+            self.__ip = socket.gethostbyname(addr) if not addr.isdigit() else addr
+            self.__IP = ipaddress.ip_address(self.__ip)
+        except socket.herror as he:
+            print(he.args[1])
+            print("[-] PLEASE PROVIDE A VALID ADDRESS")
+            sys.exit()
+        except socket.gaierror as ga:
+            print(ga.args[1])
+            print("[-] PLEASE PROVIDE A VALID ADDRESS")
+            sys.exit()
+        except socket.error as err:
+            print(err.args[1])
+            print("[-] SOMETHING SEEMS TO BE WRONG WITH YOUR IP ADDRESS. PLEASE PROVIDE A VALID ADDRESS")
+            sys.exit()
 
-        self.__IP = ipaddress.ip_address(self.address)
+    def __call__(self, *args, **kwargs):
+        """
+        :return: the class instance of the ipaddress.ip_address.
+        """
+        return self.__IP
 
     @property
     def address(self):
-        return self.__ip
+        """
+        :return: returns the raw IP address.
+        """
+        return self.__IP.exploded
 
     @address.setter
-    def address(self, value):
-        if value.isalpha():
-            self.__ip = socket.gethostbyname(value)
-        else:
-            self.__ip = value
-        pass
+    def address(self, address):
+        """
+        :param address: sets the raw IP address by hostname or an address.
+        :return:
+        """
+        self.__host, self.__ip = address if address.isalpha() else socket.gethostbyaddr(address), \
+            socket.gethostbyname(address) if self.address.isalpha() else address
+
+        self.__IP = ipaddress.ip_address(self.__ip)
 
     @property
     def hostname(self):
-        return self.__host if self.__host is not None else socket.gethostbyaddr(self.address)[0]
+        """
+        :return: the hostname of the ip address
+        """
+        return self.__host
 
     @property
     def all_ips(self):
+        """
+        :return: all the registered IP addresses signed
+        """
         return socket.gethostbyname_ex(self.hostname)[-1]
 
     @property
@@ -91,11 +122,18 @@ class Resolve:
 
     @property
     def version(self):
-        return self.__IP.version
+        return "IPv"+str(self.__IP.version)
 
     @property
     def is_reversed(self):
         return self.__IP.is_reserved
 
-    def mask(self, prefix):
-        return Mask(self.address, prefix)
+
+if __name__ == '__main__':
+    ad = "google.com"
+    re = Resolve(ad)
+    print(re.hostname)
+    print(re.address)
+    print(re.fqdn)
+    print(re.all_ips)
+    print(re.version)
