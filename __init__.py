@@ -1,6 +1,6 @@
 """
-this package just includes a list of socket function that are really necessary for me
-to start creating and crafting packets.
--------------------------------------------------------------------------------------
+the main entry point of the ip package is the __init__ file.
+------------------------------------------------------------
+specifies a few dependencies for the app and coagulates all the
+several pieces into one for easy imports.
 """
-from ip.connect import IP, this_ip
