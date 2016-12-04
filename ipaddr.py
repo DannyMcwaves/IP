@@ -1,19 +1,21 @@
 """
-
+this is the main module that provides most of the functionality I am trying to implement
+in this package
 """
-import socket
+
 import ipaddress
+from ip import Resolve
+from ip import localhost
 
 
 class IP:
+
     """
-    this is just a class under the IP class that is used to mask this IP address and then return network types and
-    subnets for this IP network.
+    the main purpose of the IP is for manipulating ip addresses, masking subnets, checking for the attributes
+    on IPS. the subclasses they belong or the hostmask.
     """
 
-    UP = []
-
-    def __init__(self, address, mask):
+    def __init__(self, address: str, mask: int="32"):
         """
         :param address: The IP address
         :param mask: this is the mask it should take for the number of hosts that you are planning to access
@@ -21,7 +23,19 @@ class IP:
                       host mask starts with 0 and contain either 0's and 255's
                       net masks start with 255 and contain either 0's and 255's
         """
+        address = Resolve(address).address
+        self.__mask = mask
         self.address = address + "/" + str(mask)
+        self.mask_addr = ipaddress.IPv4Network(self.address, strict=False)
+
+    @property
+    def mask(self):
+        return self.mask
+
+    @mask.setter
+    def mask(self, value: int):
+        self.mask = value
+        self.address = self.address.split("/")[0] + "/" + str(value)
         self.mask_addr = ipaddress.IPv4Network(self.address, strict=False)
 
     @property
@@ -53,7 +67,6 @@ if __name__ == '__main__':
     # from pprint import pprint
     ip = IP("gstatic.com")
     print(ip.address)
-    print(ip.hostname)
     m = ip.mask(24)
     print(m.address)
     print(m.number_of_hosts)
