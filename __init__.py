@@ -5,5 +5,5 @@ specifies a few dependencies for the app and coagulates all the
 several pieces into one for easy imports.
 """
 
-from ip.resolve.resolve import Resolve
-from ip.utils.local import localhost
+from ip.resolve import Resolve
+from ip.utils import Localhost
