@@ -7,5 +7,6 @@ setup(
     license="BSD",
     author_email="dannymcwaves96@gmail.com",
     url="http://github.com/DannyMcwaves/IP",
-    packages=["tests", "resolve", "local"]
+    packages=["tests", "resolve", "util"]
 )
+
