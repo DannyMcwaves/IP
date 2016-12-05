@@ -7,4 +7,3 @@ from ip.tests.tests import LocalhostTestCase
 from ip.tests.tests import IPTestCase
 
 __all__ = ["ResolveTestCase", "LocalhostTestCase", "IPTestCase"]
-
