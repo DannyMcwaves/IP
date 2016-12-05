@@ -5,6 +5,7 @@ various classes available in this package.
 TESTS should be provided for Resolve, IP, and Localhost
 """
 
+
 from unittest import TestCase, TestSuite
 from ip import Resolve
 from ip import Localhost
