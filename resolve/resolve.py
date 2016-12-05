@@ -76,6 +76,9 @@ class Resolve:
         """
         return self.__IP
 
+    def __add__(self, other):
+        return self.address + "/" + other
+
     @property
     def address(self):
         """
@@ -122,7 +125,7 @@ class Resolve:
 
     @property
     def version(self):
-        return "IPv"+str(self.__IP.version)
+        return "IPv" + str(self.__IP.version)
 
     @property
     def is_reversed(self):
