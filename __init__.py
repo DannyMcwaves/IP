@@ -7,3 +7,6 @@ several pieces into one for easy imports.
 
 from ip.resolve import Resolve
 from ip.utils import Localhost
+from ip.ipAddress import IP
+
+__all__ = ["IP", "Localhost", "Resolve"]
