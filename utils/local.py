@@ -70,4 +70,3 @@ if __name__ == '__main__':
     print(lhost.ip)
     print(lhost.platform, lhost.node, lhost.machine, lhost.processor, lhost.os_version, lhost.os_release)
     print(lhost.ipaddress)
-
