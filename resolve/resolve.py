@@ -38,7 +38,6 @@ useful methods of the socket will include:
 
 import socket
 import sys
-import os
 import ipaddress
 
 __all__ = ["Resolve"]
@@ -55,7 +54,7 @@ class Resolve:
     def __init__(self, addr: str):
         try:
             self.__host = addr if addr.isalpha() else socket.gethostbyaddr(addr)[0]
-            self.__ip = socket.gethostbyname(addr) if not addr.isdigit() else addr
+            self.__ip = socket.gethostbyname(addr) if not addr.isdigit() or not addr.isalnum() else addr
             self.__IP = ipaddress.ip_address(self.__ip)
         except socket.herror as he:
             print(he.args[1])
@@ -67,10 +66,10 @@ class Resolve:
             sys.exit()
         except socket.error as err:
             print(err.args[1])
-            print("[-] SOMETHING SEEMS TO BE WRONG WITH YOUR IP ADDRESS. PLEASE PROVIDE A VALID ADDRESS")
+            print("[-] SOMETHING SEEMS WRONG WITH YOUR IP ADDRESS. PLEASE PROVIDE A VALID ADDRESS.")
             sys.exit()
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self):
         """
         :return: the class instance of the ipaddress.ip_address.
         """
@@ -78,6 +77,12 @@ class Resolve:
 
     def __add__(self, other):
         return self.address + "/" + other
+
+    def __str__(self):
+        form = "IP_ADDR: {address}\nVERSION: {version}\nHOSTNAME: {hostname}\nFQDN: {fqdn}\nSTATE: {state}\n" \
+               "--[NB: POSSIBLE TO ACCESS INDIVIDUAL PROPS]--\n"
+        return form.format(address=self.address, version=self.version,
+                           hostname=self.hostname, fqdn=self.fqdn, state=self.state)
 
     @property
     def address(self):
@@ -103,6 +108,28 @@ class Resolve:
         :return: the hostname of the ip address
         """
         return self.__host
+
+    @property
+    def state(self):
+        """
+        :return: The current state of the ip address.
+        """
+        connect = socket.socket()
+        try:
+            stat = connect.connect_ex((self.address, 80))
+            if stat == 0:
+                return "HOST IS UP"
+            else:
+                return "HOST IS DOWN"
+        except socket.gaierror as gaer:
+            return gaer.args[1]
+        except socket.herror as her:
+            return her.args[1]
+        except socket.error as err:
+            return err.args[1]
+        finally:
+            connect.shutdown(socket.SHUT_RDWR)
+            connect.close()
 
     @property
     def all_ips(self):

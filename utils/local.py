@@ -10,21 +10,31 @@ to figure out for myself.
 import sys
 import re
 import os
+import platform
+from ip import Resolve
 
-__all__ = ["localhost"]
+
+__all__ = ["Localhost"]
 
 
-class localhost:
+class Localhost:
 
     def __init__(self):
         """
         the localhost does not even need any addresses passed. It is static.
         """
-        self.__ip = "127.0.0.1"
-        self.__hostname = "localhost"
+        self.ip = Resolve("127.0.0.1")
+        self.hostname = "localhost"
+        uname = platform.uname()
+        self.platform = uname.system
+        self.node = uname.node
+        self.processor = uname.processor
+        self.machine = uname.machine
+        self.os_version = uname.version
+        self.os_release = uname.release
 
     @property
-    def ipAddress(self, iface=None):
+    def ipaddress(self, iface=None):
         """
         :return: A dictionary of all the ip addresses on the various interface of the localhost
         """
@@ -37,9 +47,9 @@ class localhost:
 
         if len(addresses) == 3:
             return {
-                "local": addresses[0][5:],
-                "wifi": addresses[2][5:],
-                "other": addresses[1][5:]
+                "other": addresses[0][5:],
+                "wifi/modem": addresses[2][5:],
+                "local": addresses[1][5:]
             }
         elif len(addresses) == 4:
             return {
@@ -52,3 +62,11 @@ class localhost:
             return addresses[0][5:]
         except IndexError:
             return NotImplemented
+
+
+if __name__ == '__main__':
+    lhost = Localhost()
+    print(lhost.hostname)
+    print(lhost.ip)
+    print(lhost.platform, lhost.node, lhost.machine, lhost.processor, lhost.os_version, lhost.os_release)
+    print(lhost.ipaddress)
