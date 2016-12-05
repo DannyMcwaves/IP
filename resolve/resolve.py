@@ -40,6 +40,7 @@ import socket
 import sys
 import ipaddress
 
+
 __all__ = ["Resolve"]
 
 
