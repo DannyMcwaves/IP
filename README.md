@@ -1,12 +1,25 @@
 # IP
+A lightweight package for manipulating IP addresses, masking networks / subnet and checking features of an IP address.
 
-> The ip package is very simple and very easy to use. all you need to do is to import the the main ip class.
+## DESCRIPTION
 
-```python
+###BASIC SUB PACKAGES
 
-from ip import IP, this_ip
+`**resolve**` The base package that resolve the features of a specific IP address or hostname
 
-```
+`**utils**` The sub package that exposes the Localhost Object and lets you interact with
+and see the feature of your host machine.
+
+`**tests**` The test suite. Contains Test Cases for the various classes available in the package.
+
+###MODULES
+`**main**` The main module runs the tests in the tests package.
+
+`**setup**` As the name suggests, this module helps you setup the package on your system
+
+`**ipAddress**` This is the main interface, which is what you would use most to mask network address, get all host
+ or subnet within a network range among other's. see usage below
+
 
 > Then you call the class just like you'd call any other normal function and then you pass the the name of the site or
 
