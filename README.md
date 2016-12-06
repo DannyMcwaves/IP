@@ -38,6 +38,7 @@ thesexypanda.com or 1222.802.1242.0.
 Also, calling print on an instance of the Resolved class prints several features of the ip/hostname such as the version
 Hostname, state(up or down). Below is a full list of the properties on the Resolved Object.
 
+```python3
     from ip import Resolve
 
     res = Resolve("google.com") or Resolve("216.34.89.23")
@@ -45,7 +46,8 @@ Hostname, state(up or down). Below is a full list of the properties on the Resol
     # throws an error if name cannot be resolved or ip address is wrong.
 
     res.address # returns the current ip address.
-    res.address = "facebook.com" # sets the current address or host name. Overrides the initial one. BEWARE!
+    res.address = "facebook.com"
+    # sets the current address or host name. Overrides the initial one. BEWARE!
 
     res.hostname
     # returns the current hostname of the ip address
@@ -65,7 +67,7 @@ Hostname, state(up or down). Below is a full list of the properties on the Resol
 
     ### THERE ARE OTHER PROPERTIES THAT ARE AVAILABLE, PLEASE DO CHECK!!!
 
-
+```
 
 
 
