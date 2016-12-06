@@ -165,9 +165,11 @@ Below is a list of properties available.
     # the current os release of this machine.
 
     localhost.ipaddress(iface=None)
-    # if the iface option is none, it returns a dictionary of all the ip address on their corrresponding
-    # network interfaces. If you specify the iface and it has internet connection it returns the IP address on that
-    particular interface. the interface option include "wlan0, eth0, eth2, l0, virbr0"
+    # if the iface option is none, it returns a dictionary of
+    # all the ip address on their corrresponding
+    # network interfaces. If you specify the iface and it has
+    # internet connection it returns the IP address on that
+    # particular interface. the interface option include "wlan0, eth0, eth2, l0, virbr0"
 ```
 
 
