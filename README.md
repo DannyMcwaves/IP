@@ -1,9 +1,10 @@
 # IP
 A lightweight package for manipulating IP addresses, masking networks / subnet and checking features of an IP address.
+Has support for both versions of IP addresses: IPv4 and IPv6.
 
 ## DESCRIPTION
 
-###BASIC SUB PACKAGES
+###SUB PACKAGES
 
 **`resolve`** The base package that resolve the features of a specific IP address or hostname
 
@@ -21,7 +22,57 @@ and see the feature of your host machine.
  or subnet within a network range among other's. see usage below
 
 
-##USAGE
+##FEATURES
+
+###resolve
+
+    from ip import Resolve
+
+**`USAGE`** This package accepts the top-level hostname or the IP Address and resolves several features about the IP
+address or the hostname. top-level hostname is the name of the host without the protocol. eg. google.com and not
+www.google.com or 127.0.0.1 or facebook.com.
+
+It raises an UnResolvedException error when the hostname passed is not known or the ip address is wrong. eg.
+thesexypanda.com or 1222.802.1242.0.
+
+Also, calling print on an instance of the Resolved class prints several features of the ip/hostname such as the version
+Hostname, state(up or down). Below is a full list of the properties on the Resolved Object.
+
+    from ip import Resolve
+
+    res = Resolve("google.com") or Resolve("216.34.89.23")
+    # initializes the object and returns an instance of the Resolve Object.
+    # throws an error if name cannot be resolved or ip address is wrong.
+
+    res.address # returns the current ip address.
+    res.address = "facebook.com" # sets the current address or host name. Overrides the initial one. BEWARE!
+
+    res.hostname
+    # returns the current hostname of the ip address
+
+    res.state
+    # returns the state of the current ip addressed passed.
+
+    res.app_ips
+    # returns all other IP addresses that are associated with this IP addresses. Public IP address that
+    # belong to the same network.
+
+    res.version
+    # return the version of the IP address.
+
+    res.fqdn
+    # returns the fully qualified domain name of the IP address or hostname.
+
+    ### THERE ARE OTHER PROPERTIES THAT ARE AVAILABLE, PLEASE DO CHECK!!!
+
+
+
+
+
+
+
+
+
 > Then you call the class just like you'd call any other normal function and then you pass the the name of the site or
 
 > IP address of the site if you know it and then you get the IP instance where you operate on it using methods.
