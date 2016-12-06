@@ -23,9 +23,9 @@ class Localhost:
         """
         the localhost does not even need any addresses passed. It is static.
         """
+        uname = platform.uname()
         self.ip = Resolve("127.0.0.1")
         self.hostname = "localhost"
-        uname = platform.uname()
         self.platform = uname.system
         self.node = uname.node
         self.processor = uname.processor
