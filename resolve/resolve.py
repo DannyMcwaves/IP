@@ -37,11 +37,10 @@ useful methods of the socket will include:
 """
 
 import socket
-import sys
 import ipaddress
 
 
-__all__ = ["Resolve"]
+__all__ = ["Resolve", "UnResolveException"]
 
 
 class Resolve:
@@ -59,16 +58,13 @@ class Resolve:
             self.__IP = ipaddress.ip_address(self.__ip)
         except socket.herror as he:
             print(he.args[1])
-            print("[-] PLEASE PROVIDE A VALID ADDRESS")
-            sys.exit()
+            raise UnResolvedException(he.args[-1])
         except socket.gaierror as ga:
             print(ga.args[1])
-            print("[-] PLEASE PROVIDE A VALID ADDRESS")
-            sys.exit()
+            raise UnResolvedException(ga.args[-1])
         except socket.error as err:
             print(err.args[1])
-            print("[-] SOMETHING SEEMS WRONG WITH YOUR IP ADDRESS. PLEASE PROVIDE A VALID ADDRESS.")
-            sys.exit()
+            raise UnResolvedException(err.args[-1])
 
     def __call__(self):
         """
@@ -160,9 +156,16 @@ class Resolve:
         return self.__IP.is_reserved
 
 
+class UnResolvedException(Exception):
+    """
+    this is the base Exception class for my resolve class.
+    this is thrown in case of any error in the resolve method.
+    """
+
 if __name__ == '__main__':
     ad = "google.com"
     re = Resolve(ad)
+    # print(re)
     print(re.hostname)
     print(re.address)
     print(re.fqdn)
