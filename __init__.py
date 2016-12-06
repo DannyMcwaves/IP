@@ -5,8 +5,8 @@ specifies a few dependencies for the app and coagulates all the
 several pieces into one for easy imports.
 """
 
-from ip.resolve import Resolve
+from ip.resolve import Resolve, UnResolvedException
 from ip.utils import Localhost
 from ip.ipAddress import IP
 
-__all__ = ["IP", "Localhost", "Resolve"]
+__all__ = ["IP", "Localhost", "Resolve", "UnResolvedException"]
