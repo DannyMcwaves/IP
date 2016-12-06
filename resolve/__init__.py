@@ -1,3 +1,3 @@
 
-from ip.resolve.resolve import Resolve
-__all__ = ["Resolve"]
+from ip.resolve.resolve import Resolve, UnResolvedException
+__all__ = ["Resolve", "UnResolvedException"]
