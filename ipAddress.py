@@ -4,7 +4,10 @@ in this package
 """
 
 import ipaddress
-from ip import Resolve
+from ip import Resolve, UnResolvedException
+import sys
+
+__all__ = ["IP"]
 
 
 class IP:
@@ -22,11 +25,15 @@ class IP:
                       host mask starts with 0 and contain either 0's and 255's
                       net masks start with 255 and contain either 0's and 255's
         """
-        self.ip_address = Resolve(address)
-        self.__mask = mask
-        addr = self.ip_address + str(mask)
-        self.mask_addr = ipaddress.IPv4Network(addr, strict=False) if self.ip_address.version == "IPv4" else \
-            ipaddress.IPv6Network(addr, strict=False)
+        try:
+            self.ip_address = Resolve(address)
+            self.__mask = mask
+            addr = self.ip_address + str(mask)
+            self.mask_addr = ipaddress.IPv4Network(addr, strict=False) if self.ip_address.version == "IPv4" else \
+                ipaddress.IPv6Network(addr, strict=False)
+        except UnResolvedException as unRes:
+            print(unRes.args[1])
+            sys.exit()
 
     def __call__(self, *args, **kwargs):
         """
