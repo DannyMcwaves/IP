@@ -22,9 +22,9 @@ and see the feature of your host machine.
  or subnet within a network range among other's. see usage below
 
 
-##FEATURES
+##MAIN API's
 
-###resolve
+###Resolve
 
     from ip import Resolve
 
@@ -38,7 +38,7 @@ thesexypanda.com or 1222.802.1242.0.
 Also, calling print on an instance of the Resolved class prints several features of the ip/hostname such as the version
 Hostname, state(up or down). Below is a full list of the properties on the Resolved Object.
 
-```python3
+```python
     from ip import Resolve
 
     res = Resolve("google.com") or Resolve("216.34.89.23")
@@ -56,8 +56,8 @@ Hostname, state(up or down). Below is a full list of the properties on the Resol
     # returns the state of the current ip addressed passed.
 
     res.app_ips
-    # returns all other IP addresses that are associated with this IP addresses. Public IP address that
-    # belong to the same network.
+    # returns all other IP addresses that are associated with this IP addresses:
+    # Public IP address that belong to the same network.
 
     res.version
     # return the version of the IP address.
@@ -66,114 +66,115 @@ Hostname, state(up or down). Below is a full list of the properties on the Resol
     # returns the fully qualified domain name of the IP address or hostname.
 
     ### THERE ARE OTHER PROPERTIES THAT ARE AVAILABLE, PLEASE DO CHECK!!!
-
 ```
 
+###IP
 
+    from ip import IP
 
+**`USAGE`** The IP object is the main interface to the ip package. Like the Resolve Object, it takes an IP address or
+a hostname argument, and it also takes a second argument called 'mask' which is optional. the mask is the network mask
+of the ip address, the default mask is 32, so your full IP network address is "127.0.0.1/32". You can define it later
+with the mask property. The mask suggests the range of the network. the value is between 0-32. 32 refers to a particular
+computer and 0 refers to the whole internet -- I KNOW !!.
 
+When you call an instance of the IP Object it returns a resolved object.
+    _ip = IP("facebook.com")
+    res = _ip()
+    # the res variable is an instance of the Resolve Object defined above. It has all the properties defined above.
 
+The IP Object has a Duck Type dependency on the Resolve method and as such all that is said for the Resolved Object
+applies to the IP object, like passing a wrong IP address or hostname.
 
+Here is a difference to take away, the IP Object works with networks and the Resolve Object works with single IP address
 
-> Then you call the class just like you'd call any other normal function and then you pass the the name of the site or
-
-> IP address of the site if you know it and then you get the IP instance where you operate on it using methods.
+Below is full list of the properties on the IP Object
 
 ```python
- 
- *this_ip(iface=None)*
- 	
- 	# this is just a function that returns the current ip address of the machine that you are currently using.
- 	
- 	# you can pass an iface which is just the ip address on that particular interface if it exists.
- 	
- 	# else it returns a dictionary containing all the interfaces and the corresponding IP addresses.
+    from ip import IP
+    _ip = IP("facebook.com")
 
- *ip = IP("localhost")*
- 
- **ip.address**
- # returns the ip address of the hostname 
+    res = _ip()
+    # calling an instance of the IP object returns a Resolve Object.
 
- *ip.address = "remote_host"*
- 
- # sets the name of the ip address to the remote host
+    _ip.address
+    # returns the full masked address of the network. eg 123.456.789.001/32
 
- *ip.hostname
- 
- # returns the hostname of the ip address or the same hostname passed 
+    _ip.mask
+    # returns the current network mask. eg. 32.
+    _ip.mask = 24
+    # sets a new network mask. so the new address will be 123.456.789.0/24
 
- *ip.all_ips
- 
- # this methods works just like the nslookup tool in case you have used that before. All this that is to return all the
- 
- # list ip addresses registered to a particular name.
+    _ip.hostmask
+    # returns the number of hosts masked in the network address in the form 0.0.0.225
 
- *ip.fqdn
- 
- # this method returns the fully qualified domain name of the ip or the host
+    _ip.netmask
+    # the opposite of the hostmask is the netmask. returns the subnet mask in the form 255.255.255.0
 
- *ip.is_local
- 
- # returns true if the ip is local ip
+    _ip.network_address
+    # after setting a mask lower that 32 the IP address changes to a network address.
+    # when you call this property, it return that address.
 
- *ip.is_private
- 
- # returns true if the ip is private
+    _ip.number_of_hosts
+    # this returns the entire number of hosts in the network.
 
- *ip.version
- 
- # returns the version of the ip address v4 or v6
+    _ip.hosts
+    # returns a list of all the IP addresses of the hosts in the network. Yes all of them.
+    # this is not advisable for large network ranges. Instead use subnet to divide the large network
+    # and get the hosts property on it.
 
- *ip.is_reserved
- 
- # returns true if the ip is reserved.
-
- *network = ip.mask(mask_no) eg: network = ip.mask(24)
- 
- # In case you are familiar with subnet masking. Using numbers to mask/represent a whole network, you will find this
- 
- # method really great to use. Pass a number that masks the subnet and then it returns an object. hence it returns the
- 
- # whole network.
-
-    *network.network_address*
-    
-    # returns the network address as in localhost/24 or 127.0.0.1./24
-
-    *network.hostmask*
-    
-    # returns a mask of all the hosts in the network 0.0.0.255 
-
-    *network.netstat*
-    
-    # returns the network mask of the network 255.255.255.0
-
-    *network.number_of_hosts*
-    
-    # returns the number of hosts in the network
-
-    *network.hosts*
-    
-    # returns a generator object of all the hosts in the network
-
-    *network.subnets*
-    
-    # returns a list of all the subnets in the network which you can manipulate like a netowrk because it technically
-    
-    # is a network
-
-    * network.check_up
-    
-    # returns a list of all the hosts that are up in the network. this might take a while depending on your internet connection
-
+    _ip.subnets
+    # returns the subnets under this network.
 ```
 
-*this is just as simple as it is, actually very simple.*
+###Localhost
 
-**thank you**
+    from ip import Localhost
 
-:metal:
+**`USAGE`** As stated earlier, this lets you interact with your system and see several features of your computer. For
+example, hostname, ip addresses of the host, ip addresses on the various network interfaces, the os_release,
+the os_version among others.
 
-:+1: :sparkles:
+Below is a list of properties available.
 
-DANNY MCWAVES
+```python
+    from ip import Localhost
+    localhost = Localhost()
+    # you dont need to pass anything to it.
+
+    localhost.hostname
+    # will almost always return 'localhost'
+
+    localhost.ip
+    # returns the standard ip address of localhost.
+
+    localhost.platform
+    # returns the name of the platform of the local machine. Usually Linux, Unix or Window
+
+    localhost.node
+    # returns an alternative name set for this computer.
+    # For instance I call my computer mcbook even though it is not a mcbook.
+
+    localhost.processor
+    # the current processor on this machine
+
+    localhost.os_version
+    # returns the version of the OS this machine running on.
+
+    localhost.os_release
+    # the current os release of this machine.
+
+    localhost.ipaddress(iface=None)
+    # if the iface option is none, it returns a dictionary of all the ip address on their corrresponding
+    # network interfaces. If you specify the iface and it has internet connection it returns the IP address on that
+    particular interface. the interface option include "wlan0, eth0, eth2, l0, virbr0"
+```
+
+
+## Need help?
+Feel free to [create an issue](http://github.com/DannyMcwaves/IP/issues),
+[tweet me](http://twitter.com/DannyMcwaves), or [send me an email](mailto:dannymcwaves96@gmail.com).
+I'd be glad to help where I can!
+
+:smile::smile::smile::smiley::+1::+1::+1::ok_hand::metal::hand::raised_hands::muscle::clap::wave:
+
