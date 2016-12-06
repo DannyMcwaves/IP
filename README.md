@@ -17,7 +17,7 @@ and see the feature of your host machine.
 
 `**setup**` As the name suggests, this module helps you setup the package on your system
 
-`**ipAddress**` This is the main interface, which is what you would use most to mask network address, get all host
+**`ipAddress`** This is the main interface, which is what you would use most to mask network address, get all host
  or subnet within a network range among other's. see usage below
 
 
