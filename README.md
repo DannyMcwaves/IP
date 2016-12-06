@@ -21,6 +21,7 @@ and see the feature of your host machine.
  or subnet within a network range among other's. see usage below
 
 
+##USAGE
 > Then you call the class just like you'd call any other normal function and then you pass the the name of the site or
 
 > IP address of the site if you know it and then you get the IP instance where you operate on it using methods.
