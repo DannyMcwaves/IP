@@ -39,7 +39,6 @@ useful methods of the socket will include:
 import socket
 import ipaddress
 
-
 __all__ = ["Resolve", "UnResolvedException"]
 
 
