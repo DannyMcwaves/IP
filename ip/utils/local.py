@@ -11,7 +11,7 @@ import sys
 import re
 import os
 import platform
-from ip import Resolve
+from ip.resolve import Resolve
 
 
 __all__ = ["Localhost"]
