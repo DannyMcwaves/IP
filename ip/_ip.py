@@ -4,7 +4,7 @@ in this package
 """
 
 import ipaddress
-from ip import Resolve, UnResolvedException
+from ip.resolve import Resolve, UnResolvedException
 import sys
 
 __all__ = ["IP"]

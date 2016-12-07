@@ -6,13 +6,12 @@ TESTS should be provided for Resolve, IP, and Localhost
 """
 
 import unittest
-from ip import Resolve, UnResolvedException
-from ip import Localhost
-from ip import IP
-import socket
+from ip.resolve import Resolve, UnResolvedException
+from ip.utils import Localhost
+from ip._ip import IP
 
 
-class ResolveTestCase(unittest.TestCase):
+class IPTestCase(unittest.TestCase):
     """
     Test case for the Resolve package.
     """
@@ -31,17 +30,14 @@ class ResolveTestCase(unittest.TestCase):
         with self.assertRaises(UnResolvedException):
             Resolve(tests_cases[3])
 
+    def test_localhost(self):
 
-class LocalhostTestCase(unittest.TestCase):
-    """
-    Test case for the Localhost package.
-    """
+        local = Localhost()
+        self.assertIsInstance(local, Localhost)
 
-
-class IPTestCase(unittest.TestCase):
-    """
-    Test case for the IP Package.
-    """
+    def test_IP(self):
+        _ip = IP("facebook.com")
+        self.assertIsInstance(_ip, IP)
 
 
 def main():

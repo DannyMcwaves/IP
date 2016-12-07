@@ -40,7 +40,7 @@ import socket
 import ipaddress
 
 
-__all__ = ["Resolve", "UnResolveException"]
+__all__ = ["Resolve", "UnResolvedException"]
 
 
 class Resolve:
