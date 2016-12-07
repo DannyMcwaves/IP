@@ -8,5 +8,4 @@ several pieces into one for easy imports.
 from ip.resolve import Resolve, UnResolvedException
 from ip.utils import Localhost
 from ip._ip import IP
-
 __all__ = ["IP", "Localhost", "Resolve", "UnResolvedException"]
