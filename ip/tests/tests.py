@@ -5,6 +5,7 @@ various classes available in this package.
 TESTS should be provided for Resolve, IP, and Localhost
 """
 
+
 import unittest
 from ip.resolve import Resolve, UnResolvedException
 from ip.utils import Localhost
